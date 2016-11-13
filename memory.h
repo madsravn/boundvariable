@@ -15,8 +15,12 @@ class Memory {
         Memory& operator>>(numtype& x);
         void setPC(int x);
         int getPC();
-        int getMem(int pos);
-        void setMem(int pos, int val);
+        int getMem(int array, int pos);
+        std::vector<numtype> getMem(int array);
+        void setMem(int array, int pos, int val);
+        void setMem(int array, std::vector<numtype> vec);
+        int newArray(int size);
+        void clearArray(int pos);
 
     private:
         std::vector<std::vector<numtype>> ops;

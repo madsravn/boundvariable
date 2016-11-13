@@ -39,11 +39,43 @@ Memory::getPC() {
 }
 
 int
-Memory::getMem(int pos) {
-    return ops.at(0).at(pos);
+Memory::getMem(int array, int pos) {
+    return ops.at(array).at(pos);
+}
+
+std::vector<numtype>
+Memory::getMem(int array) {
+    return ops.at(array);
 }
 
 void
-Memory::setMem(int pos, int value) {
-    ops.at(0).at(pos) = value;
+Memory::setMem(int array, std::vector<numtype> vec) {
+    ops.at(array) = vec;
+}
+
+void
+Memory::setMem(int array, int pos, int value) {
+    ops.at(array).at(pos) = value;
+}
+
+int
+Memory::newArray(int size) {
+
+    std::vector<numtype> vec(size, 0);
+
+    // Try to find an empty array in the memory
+    for(int i = 1; i < ops.size(); ++i) {
+        if(ops.at(i).size() == 0) {
+            ops.at(i) = vec;
+            return i;
+        }
+    }
+    ops.push_back(vec);
+    return ops.size()-1;
+}
+
+void
+Memory::clearArray(int pos) {
+    std::vector<numtype> vec(0,0);
+    ops.at(pos) = vec;
 }

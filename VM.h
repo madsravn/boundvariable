@@ -14,7 +14,6 @@ class VM {
         std::vector<char> input;
         // #0. Conditional Move.
         void condMove(numtype num);
-
         // #1. Array Index.
         void arrayIndex(numtype num);
         // #2. Array Amendment.

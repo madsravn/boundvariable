@@ -4,10 +4,17 @@
 #include <algorithm>
 #include <tuple>
 #include <cmath>
+#include <bitset>
 
 VM::VM(std::string file) {
     mem.load(file);
     reg.insert(std::begin(reg), 8, 0);
+    /*std::string str {"(\\b.bb)(\\v.vv)06FHPVboundvarHRAk"};
+    std::copy(std::begin(str), std::end(str), std::back_inserter(input));
+    input.push_back(10);
+    input.push_back('p');
+    input.push_back(10);
+    std::reverse(std::begin(input), std::end(input));*/
 }
 
 std::tuple<int, int, int> extract(numtype num) {
@@ -110,7 +117,6 @@ VM::inputcmd(numtype num) {
     int a,b,c;
     std::tie(a,b,c) = extract(num);
     if(input.empty()) {
-        std::cout << std::endl << "Input: ";
         std::string str;
         std::getline(std::cin, str);
         std::copy(std::begin(str), std::end(str), std::back_inserter(input));
@@ -119,10 +125,14 @@ VM::inputcmd(numtype num) {
     }
     char k = input.back();
     input.pop_back();
-    if(k == 10) {
-        numtype end = (((1 >> 31) - 1) >> 1) + 1
-        reg.at(c) = end;
+    if(k == -1) {
+        numtype end = 1;
+        end = (((end << 31) - 1) << 1) + 1;
+        std::bitset<33> b(end);
+        std::cout << "Writing end: " << b << std::endl;
+        //reg.at(c) = end;
     } else {
+        //std::cout << "Writing: " << k << " (" << (numtype)k << ")" << std::endl;
         reg.at(c) = k;
     }
 }
@@ -172,6 +182,7 @@ VM::run() {
     numtype instr;
     while(true) {
         mem >> instr;
+        //std::cout << (instr >> 28) << std::endl;
         auto func = instructions.at(instr >> 28);
         func(instr);
     }

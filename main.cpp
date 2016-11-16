@@ -10,7 +10,7 @@
 
 
 auto main() -> int {
-    VM vm("sandmark.umz");
+    VM vm("output.umz");
     vm.run();
 
     return 0;
